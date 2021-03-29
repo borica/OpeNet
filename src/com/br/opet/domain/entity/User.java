@@ -18,6 +18,7 @@ public class User {
 	
 	public User(String username, String password, Date lastLogin) {
 		this.username = username;
+		this.password = password;
 		this.lastLogin = lastLogin;
 	}
 	
