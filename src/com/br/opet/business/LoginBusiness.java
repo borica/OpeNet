@@ -2,7 +2,7 @@ package com.br.opet.business;
 
 import javax.ejb.Local;
 
-import com.br.opet.entity.User;
+import com.br.opet.domain.entity.User;
 
 @Local
 public interface LoginBusiness {

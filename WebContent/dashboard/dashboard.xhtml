@@ -25,7 +25,13 @@
 							<div class="row align-items-center h-100">
 								<div class="col-md-12 text-center">
 									<h1>Login Realizado com Sucesso.</h1>
-									<h2>Usuário: #{dashboardController.loggedUser.username}</h2>
+									<p:panel rendered="#{not dashboardController.loggedUser.googleUser}">
+										<h2>Usuário: #{dashboardController.loggedUser.username}</h2>
+									</p:panel>
+									<p:panel rendered="#{dashboardController.loggedUser.googleUser}">
+										<img style="height: 200px; width: 200px" src="#{dashboardController.loggedUser.googleUserInfoDTO.picture_url}" />
+										<h2>Usuário: #{dashboardController.loggedUser.googleUserInfoDTO.given_name}</h2>
+									</p:panel>
 									<h3>Data do login: #{dashboardController.loggedUser.lastLogin}</h3>
 									<h:commandLink actionListener="#{dashboardController.logout}" value="Logout" />
 								</div>

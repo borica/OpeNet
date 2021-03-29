@@ -3,7 +3,7 @@ package com.br.opet.dao.impl;
 import javax.ejb.Stateless;
 
 import com.br.opet.dao.LoginDAO;
-import com.br.opet.entity.User;
+import com.br.opet.domain.entity.User;
 
 @Stateless
 public class LoginDAOImpl implements LoginDAO {

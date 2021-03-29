@@ -5,7 +5,7 @@ import javax.ejb.Stateless;
 
 import com.br.opet.business.LoginBusiness;
 import com.br.opet.dao.LoginDAO;
-import com.br.opet.entity.User;
+import com.br.opet.domain.entity.User;
 
 @Stateless
 public class LoginBusinessImpl implements LoginBusiness {

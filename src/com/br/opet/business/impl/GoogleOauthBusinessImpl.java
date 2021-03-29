@@ -1,15 +1,22 @@
 package com.br.opet.business.impl;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import com.br.opet.business.GoogleOauthBusiness;
+import com.br.opet.domain.dto.GoogleTokenDTO;
+import com.br.opet.domain.dto.GoogleUserInfoDTO;
+import com.br.opet.domain.entity.User;
+import com.br.opet.rest.GoogleOauthRest;
 import com.br.opet.util.RestUtil;
 
 @Stateless
 public class GoogleOauthBusinessImpl implements GoogleOauthBusiness {
 	
 	private static final String G_API_CLIENT_ID = "863559431244-idkms7ag5ulrrsdp536c6tdh1e5apvql.apps.googleusercontent.com";
-	private static final String G_API_SECRET = "r7wyEgddK_neVIyfZZE63I0D";
+	
+	@EJB
+	private GoogleOauthRest googleOauthRest;
 	
 	@Override
 	public String getGoogleOauthLink() throws Exception {
@@ -21,35 +28,53 @@ public class GoogleOauthBusinessImpl implements GoogleOauthBusiness {
 		gLink.append(RestUtil.HTTPS);
 		gLink.append("accounts.google.com/o/oauth2/v2/auth");
 		gLink.append(RestUtil.PARAM);
-		gLink.append("scope");
+		gLink.append(RestUtil.SCOPE);
 		gLink.append(RestUtil.EQUALS);
-		gLink.append("https%3A//www.googleapis.com/auth/drive.metadata.readonly");
+		gLink.append("https://www.googleapis.com/auth/userinfo.profile");
 		gLink.append(RestUtil.SEPARATOR);
-		gLink.append("access_type");
+		gLink.append(RestUtil.OFFLINE);
 		gLink.append(RestUtil.EQUALS);
-		gLink.append("offline");
+		gLink.append(RestUtil.OFFLINE);
 		gLink.append(RestUtil.SEPARATOR);
-		gLink.append("include_granted_scopes");
+		gLink.append(RestUtil.INCLUDE_GRANTED_SCOPES);
 		gLink.append(RestUtil.EQUALS);
-		gLink.append("true");
+		gLink.append(RestUtil.TRUE);
 		gLink.append(RestUtil.SEPARATOR);
-		gLink.append("response_type");
+		gLink.append(RestUtil.RESPONSE_TYPE);
 		gLink.append(RestUtil.EQUALS);
-		gLink.append("code");
+		gLink.append(RestUtil.CODE);
 		gLink.append(RestUtil.SEPARATOR);
-		gLink.append("state");
+		gLink.append(RestUtil.STATE);
 		gLink.append(RestUtil.EQUALS);
 		gLink.append(STATE);
 		gLink.append(RestUtil.SEPARATOR);
-		gLink.append("redirect_uri");
+		gLink.append(RestUtil.REDIRECT_URI);
 		gLink.append(RestUtil.EQUALS);
 		gLink.append(REDIRECT_URI);
 		gLink.append(RestUtil.SEPARATOR);
-		gLink.append("client_id");
+		gLink.append(RestUtil.CLIENT_ID);
 		gLink.append(RestUtil.EQUALS);
 		gLink.append(G_API_CLIENT_ID);
 		
 		return gLink.toString();
+	}
+
+	@Override
+	public GoogleTokenDTO getGoogleTokenByAuthCode(String code) throws Exception {
+		return this.googleOauthRest.getGoogleTokenByAuthCode(code);
+	}
+
+	@Override
+	public User getGoogleUserAsUser(GoogleTokenDTO googleTokenDTO) throws Exception {
+		User userWithGoogleInfo = new User();
+		
+		GoogleUserInfoDTO googleUserInfoDTO = this.googleOauthRest.getGoogleUserInfo(googleTokenDTO);
+		
+		if(googleUserInfoDTO != null){
+			userWithGoogleInfo.setGoogleUserInfoDTO(googleUserInfoDTO);
+		}
+		
+		return userWithGoogleInfo;
 	}
 
 }

@@ -3,27 +3,32 @@ package com.br.opet.controller;
 import java.io.IOException;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import com.br.opet.business.GoogleOauthBusiness;
 import com.br.opet.controller.base.BaseController;
-import com.br.opet.entity.User;
+import com.br.opet.domain.dto.GoogleTokenDTO;
+import com.br.opet.domain.entity.User;
 
 @SessionScoped
 @ManagedBean
 public class DashboardController extends BaseController {
+	
+	@EJB
+	private GoogleOauthBusiness googleOauthBusiness;
 	
 	private User loggedUser;
 	
 	@PostConstruct
 	public void init() {
 		try {
-			setLoggedUser((User) getSessionAttribute("loggedUser"));
-			
+			loggedUser = (User) getSessionAttribute("loggedUser");
+			 
 			if(getLoggedUser() == null){
 				contextRedirect(PAGE_LOGIN);
 			}
-			
 			invalidateSession();
 		} catch (Exception e) {
 			e.printStackTrace();

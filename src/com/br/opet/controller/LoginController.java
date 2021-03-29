@@ -9,11 +9,14 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import org.apache.log4j.Logger;
+
 import com.br.opet.business.GoogleOauthBusiness;
 import com.br.opet.business.LoginBusiness;
 import com.br.opet.controller.base.BaseController;
-import com.br.opet.entity.User;
-import com.br.opet.enumerator.LoginMessages;
+import com.br.opet.domain.dto.GoogleTokenDTO;
+import com.br.opet.domain.entity.User;
+import com.br.opet.domain.enumerator.LoginMessages;
 import com.google.common.base.Strings;
 
 @ManagedBean
@@ -21,7 +24,9 @@ import com.google.common.base.Strings;
 public class LoginController extends BaseController implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
+	
+	static Logger logger = Logger.getLogger(LoginController.class);
+	
 	@EJB
 	private LoginBusiness loginBusiness;
 	@EJB
@@ -37,22 +42,44 @@ public class LoginController extends BaseController implements Serializable {
 			this.googleLoginUrl = googleOauthBusiness.getGoogleOauthLink();
 			cleanFields();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
 	public void checkForGCode() {
-		String gCode = (String) getSessionParameter("code");
-		
-		if(Strings.isNullOrEmpty(gCode)){
-			//TODO IMPLEMENT REST CALLS
+		try {
+			String gCode = (String) getSessionParameter("code");
+			GoogleTokenDTO googleTokenDTO = (GoogleTokenDTO) getSessionAttribute("googleTokenDTO");
+			
+			if(!Strings.isNullOrEmpty(gCode)){
+				googleTokenDTO = googleOauthBusiness.getGoogleTokenByAuthCode(gCode);
+			}
+			if(googleTokenDTO != null) {
+				User gUser = googleOauthBusiness.getGoogleUserAsUser(googleTokenDTO);
+				gUser.setGoogleTokenDTO(googleTokenDTO);
+				gUser.setLastLogin(new Date());
+				gUser.setGoogleUser(true);
+				
+				setSessionAttribute("loggedUser", gUser);
+				
+				contextRedirect(PAGE_DASHBOARD);
+			}
+			if(!Strings.isNullOrEmpty(gCode) && googleTokenDTO == null){
+				addMessage(FacesMessage.SEVERITY_ERROR, "Erro!", LoginMessages.LOGIN_GOOGLE_ERROR.getMessage());
+			}
+		} catch (Exception e) {
+			addMessage(FacesMessage.SEVERITY_ERROR, "Erro!", LoginMessages.LOGIN_GOOGLE_ERROR.getMessage());
+			logger.error(e.getMessage());
 		}
 	}
 	
 	public void login() {
 		try {
 			if(validateLogin()) {
-				setSessionAttribute("loggedUser", new User(username, password, new Date()));
+				User loggedUser = new User();
+				loggedUser.setUsername(username);
+				loggedUser.setLastLogin(new Date());
+				setSessionAttribute("loggedUser", loggedUser);
 				cleanFields();
 				contextRedirect(PAGE_DASHBOARD);
 			} else {
@@ -60,7 +87,7 @@ public class LoginController extends BaseController implements Serializable {
 				addMessage(FacesMessage.SEVERITY_ERROR, "Erro!", LoginMessages.LOGIN_VAZIO.getMessage());
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -68,7 +95,7 @@ public class LoginController extends BaseController implements Serializable {
 		try {
 			externalRedirect(googleLoginUrl);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 
