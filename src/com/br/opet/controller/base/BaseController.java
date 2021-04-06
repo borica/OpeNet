@@ -10,6 +10,7 @@ public abstract class BaseController {
 	
 	protected final String PAGE_LOGIN = "/login.xhtml";
 	protected final String PAGE_DASHBOARD = "/dashboard/dashboard.xhtml";
+	protected final String PAGE_SIGNUP = "/signup/signup.xhtml";
 	
 	protected void externalRedirect(String route) throws IOException {
 		FacesContext context = FacesContext.getCurrentInstance();
