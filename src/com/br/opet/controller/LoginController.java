@@ -26,7 +26,7 @@ public class LoginController extends BaseController implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	private static final String TAG = LoginController.class.getName();
+	private static final String TAG = LoginController.class.getName() + ": ";
 	
 	static Logger logger = Logger.getLogger(LoginController.class);
 	
@@ -52,7 +52,7 @@ public class LoginController extends BaseController implements Serializable {
 	
 	public void checkForGCode() {
 		try {
-			logger.info(TAG + " Realizando verificação para codigo de retorno da API Google.");
+			logger.info(TAG + "Realizando verificação para codigo de retorno da API Google.");
 			String gCode = (String) getSessionParameter("code");
 			GoogleTokenDTO googleTokenDTO = (GoogleTokenDTO) getSessionAttribute("googleTokenDTO");
 			
@@ -68,11 +68,11 @@ public class LoginController extends BaseController implements Serializable {
 				setSessionAttribute("loggedUser", gUser);
 				
 				contextRedirect(PAGE_DASHBOARD);
-				logger.info(TAG + " Tentativa de login com Google foi bem sucedida.");
+				logger.info(TAG + "Tentativa de login com Google foi bem sucedida.");
 			}
 			if(!Strings.isNullOrEmpty(gCode) && googleTokenDTO == null){
 				addMessage(FacesMessage.SEVERITY_ERROR, "Erro!", LoginMessages.LOGIN_GOOGLE_ERROR.getMessage());
-				logger.warn(TAG + " Tentativa de login com Google falhou.");
+				logger.warn(TAG + "Tentativa de login com Google falhou.");
 			}
 		} catch (Exception e) {
 			addMessage(FacesMessage.SEVERITY_ERROR, "Erro!", LoginMessages.LOGIN_GOOGLE_ERROR.getMessage());
@@ -81,7 +81,7 @@ public class LoginController extends BaseController implements Serializable {
 	}
 	
 	public void login() {
-		logger.info(TAG + " Realizando tentativa de login.");
+		logger.info(TAG + "Realizando tentativa de login.");
 		try {
 			if(validateLogin()) {
 				User loggedUser = new User();
@@ -90,11 +90,11 @@ public class LoginController extends BaseController implements Serializable {
 				setSessionAttribute("loggedUser", loggedUser);
 				cleanFields();
 				contextRedirect(PAGE_DASHBOARD);
-				logger.info(TAG + " Tentativa bem sucedida.");
+				logger.info(TAG + "Tentativa bem sucedida.");
 			} else {
 				cleanFields();
 				addMessage(FacesMessage.SEVERITY_ERROR, "Erro!", LoginMessages.LOGIN_VAZIO.getMessage());
-				logger.warn(TAG + " Tentativa de login falhou.");
+				logger.warn(TAG + "Tentativa de login falhou.");
 			}
 		} catch (Exception e) {
 			logger.error(e.getMessage());
@@ -103,7 +103,7 @@ public class LoginController extends BaseController implements Serializable {
 	
 	public void loginWithGoogle() {
 		try {
-			logger.info(TAG + " Redirecionando para pagina de login com Google.");
+			logger.info(TAG + "Redirecionando para pagina de login com Google.");
 			externalRedirect(googleLoginUrl);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
@@ -112,7 +112,7 @@ public class LoginController extends BaseController implements Serializable {
 	
 	public void signUp() {
 		try {
-			logger.info(TAG + " Redirecionando para pagina de cadastro.");
+			logger.info(TAG + "Redirecionando para pagina de cadastro.");
 			contextRedirect(PAGE_SIGNUP);
 		} catch (IOException e) {
 			logger.error(e.getMessage());

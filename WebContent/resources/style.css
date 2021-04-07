@@ -11,8 +11,16 @@
 	width: 70%;
 }
 
+.signup-img {
+	width: 100%;
+}
+
 .login-openet-img {
 	width: 50%;
+}
+
+.signup-openet-img {
+	width: 10%;
 }
 
 .login-card {
