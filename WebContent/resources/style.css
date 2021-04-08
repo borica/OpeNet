@@ -20,7 +20,7 @@
 }
 
 .signup-openet-img {
-	width: 10%;
+	width: 25%;
 }
 
 .login-card {
@@ -29,4 +29,8 @@
 
 .full-vh { 
 	height: 100vh;
+}
+
+.hidden {
+    display: none;
 }

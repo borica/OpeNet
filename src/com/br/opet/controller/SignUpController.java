@@ -20,7 +20,7 @@ public class SignUpController extends BaseController implements Serializable {
 	
 	private static final String TAG = SignUpController.class.getName() + ": ";
 	
-	static Logger logger = Logger.getLogger(LoginController.class);
+	static Logger logger = Logger.getLogger(SignUpController.class);
 	
 	private User signUpUser;
 	
