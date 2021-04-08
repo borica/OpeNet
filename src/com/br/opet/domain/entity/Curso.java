@@ -1,8 +1,9 @@
 package com.br.opet.domain.entity;
 
 public class Curso {
-
+	
 	private int id;
+	
 	private String descricao;
 
 	public int getId() {

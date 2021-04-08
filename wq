@@ -1,0 +1,55 @@
+[1mdiff --git a/WebContent/signup/signup.xhtml b/WebContent/signup/signup.xhtml[m
+[1mindex 71ba203..00cd853 100644[m
+[1m--- a/WebContent/signup/signup.xhtml[m
+[1m+++ b/WebContent/signup/signup.xhtml[m
+[36m@@ -11,6 +11,10 @@[m
+ 		<link rel="shortcut icon" type="image/x-icon" href="resources/favicon.ico"/>[m
+ 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"	crossorigin="anonymous" />[m
+ 		<link href="../resources/style.css" rel="stylesheet" />[m
+[32m+[m		[32m<h:outputScript library="primefaces" name="jquery/jquery.js" />[m
+[32m+[m		[32m<h:outputScript target="head">[m
+[32m+[m[41m		    [m
+[32m+[m		[32m</h:outputScript>[m
+ 		<style>[m
+ 			.ui-growl {[m
+ 				width: 400px;[m
+[36m@@ -94,7 +98,6 @@[m
+ 				</div>[m
+ 			</div>[m
+ 		</div>[m
+[31m-		<script src="https://code.jquery.com/jquery-3.6.0.min.js"/>[m
+ 		<script src="signUp.js"/>[m
+ 		<script type="module" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.esm.js"/>[m
+ 		<script nomodule="" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.js"/>[m
+[1mdiff --git a/pom.xml b/pom.xml[m
+[1mindex defab46..8d316bd 100644[m
+[1m--- a/pom.xml[m
+[1m+++ b/pom.xml[m
+[36m@@ -78,6 +78,11 @@[m
+ 			<artifactId>javax.ws.rs-api</artifactId>[m
+ 			<version>2.1.1</version>[m
+ 		</dependency>[m
+[32m+[m[32m<!-- 		<dependency> -->[m
+[32m+[m[32m<!-- 			<groupId>org.hibernate</groupId> -->[m
+[32m+[m[32m<!-- 			<artifactId>hibernate-core</artifactId> -->[m
+[32m+[m[32m<!-- 			<version>5.4.30.Final</version> -->[m
+[32m+[m[32m<!-- 		</dependency> -->[m
+ 	</dependencies>[m
+ [m
+ </project>[m
+\ No newline at end of file[m
+[1mdiff --git a/src/com/br/opet/domain/entity/Curso.java b/src/com/br/opet/domain/entity/Curso.java[m
+[1mindex f802a8c..ff902bb 100644[m
+[1m--- a/src/com/br/opet/domain/entity/Curso.java[m
+[1m+++ b/src/com/br/opet/domain/entity/Curso.java[m
+[36m@@ -1,8 +1,9 @@[m
+ package com.br.opet.domain.entity;[m
+ [m
+ public class Curso {[m
+[31m-[m
+[32m+[m[41m	[m
+ 	private int id;[m
+[32m+[m[41m	[m
+ 	private String descricao;[m
+ [m
+ 	public int getId() {[m
