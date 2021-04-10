@@ -1,3 +1,4 @@
 /.apt_src/
 /build/
 /target/
+/.metadata/
