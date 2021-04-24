@@ -7,6 +7,6 @@ import com.br.opet.domain.entity.Usuario;
 @Local
 public interface LoginService {
 	
-	Boolean validCredentials(Usuario subjectUser) throws Exception;
+	Boolean verifyUserCredentials(Usuario subjectUser) throws Exception;
 	
 }

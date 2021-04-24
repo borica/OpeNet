@@ -4,11 +4,13 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:jsf="http://xmlns.jcp.org/jsf"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <f:view contentType="text/html;charset=UTF-8" encoding="UTF-8">
 	<h:head>
 		<link rel="shortcut icon" type="image/x-icon" href="resources/favicon.ico"/>
+		<title>Login - OpeNet</title>
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"	integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"	crossorigin="anonymous" />
 		<link href="resources/style.css" rel="stylesheet" />
 		<style>
@@ -37,20 +39,24 @@
 										sticky="true" />
 									<div class="input-group mt-4 mb-3">
 										<span class="input-group-text"><ion-icon name="person"></ion-icon></span>
-										<p:inputText styleClass="form-control" id="username" value="#{loginController.username}" />
+										<p:inputText styleClass="form-control" id="username" value="#{loginController.username}" required="#{empty param['skipvalidation']}" />
 										<p:watermark for="username" value="Insira seu nome de usuário" />
 									</div>
 									<div class="input-group mb-3">
 										<span class="input-group-text"><ion-icon name="lock-closed"></ion-icon></span>
-										<p:inputText styleClass="form-control" id="password" type="password" value="#{loginController.password}" />
+										<p:inputText styleClass="form-control" id="password" type="password" value="#{loginController.password}" required="#{empty param['skipvalidation']}" />
 										<p:watermark for="password" value="Insira sua senha" />
 									</div>
-									<p:commandButton value="Entrar" styleClass="ui-button-raised ui-button-help w-100" update="growl" actionListener="#{loginController.login()}" />
+									<p:commandButton value="Entrar" styleClass="ui-button-raised ui-button-help w-100" icon="pi pi-arrow-right" iconPos="right" update="@(form)" actionListener="#{loginController.login()}" />
 										
-									<p:commandButton value="Entrar com conta Google" styleClass="w-100 mt-2" actionListener="#{loginController.loginWithGoogle()}"/>
+									<p:commandButton value="Entrar com conta Google" styleClass="w-100 mt-2" icon="pi pi-google" iconPos="right" actionListener="#{loginController.loginWithGoogle()}">
+										<f:param name="skipvalidation" value="1" />
+									</p:commandButton>
 										
 									<div class="text-center text-secondary mt-2" style="font-size: 14px !important;">
-										Ainda não é um membro ? <h:commandLink actionListener="#{loginController.signUp()}" value="Cadastre-se!" />
+										Ainda não é um membro ? <p:commandLink styleClass="purple-text" actionListener="#{loginController.signUp()}" value="Cadastre-se!">
+										  							<f:param name="skipvalidation" value="1" />
+																</p:commandLink>
 									</div>
 								</h:form>
 							</div>

@@ -4,6 +4,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import com.br.opet.dao.LoginDAO;
+import com.br.opet.dao.UsuarioDAO;
 import com.br.opet.domain.entity.Usuario;
 import com.br.opet.service.LoginService;
 
@@ -13,9 +14,12 @@ public class LoginServiceImpl implements LoginService {
 	@EJB
 	LoginDAO loginDao;
 	
+	@EJB
+	UsuarioDAO usuarioDAO;
+	
 	@Override
-	public Boolean validCredentials(Usuario subjectUser) throws Exception {
-		return this.loginDao.validCredentials(subjectUser);
+	public Boolean verifyUserCredentials(Usuario subjectUser) throws Exception {
+		return this.usuarioDAO.verifyUserCredentials(subjectUser);
 	}
 
 }

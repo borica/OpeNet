@@ -8,5 +8,6 @@ import com.br.opet.domain.entity.Usuario;
 public interface UsuarioService {
 	
 	Boolean salvarUsuario(Usuario saveUser) throws Exception;
+	Boolean usernameExists(String username) throws Exception;
 	
 }

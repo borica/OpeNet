@@ -9,7 +9,8 @@
 
 <f:view contentType="text/html;charset=UTF-8" encoding="UTF-8">
 	<h:head>
-		<link rel="shortcut icon" type="image/x-icon" href="resources/favicon.ico"/>
+		<link rel="shortcut icon" type="image/x-icon" href="../resources/favicon.ico"/>
+		<title>Cadastro - OpeNet</title>
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"	crossorigin="anonymous" />
 		<link href="../resources/style.css" rel="stylesheet" />
 		<h:outputScript library="primefaces" name="jquery/jquery.js" />
@@ -45,7 +46,7 @@
 										<div class="col">
 											<div class="input-group">
 												<span class="input-group-text"><ion-icon name="person-add"></ion-icon></span>
-												<p:inputText styleClass="form-control" id="fullname" type="text" value="${signUpController.newUser.fullName}" />
+												<p:inputText styleClass="form-control" id="fullname" type="text" value="${signUpController.newUser.fullName}"/>
 												<p:watermark for="fullname" value="Insira seu nome e sobrenome" />
 											</div>
 										</div>
@@ -54,7 +55,11 @@
 										<div class="col">
 											<div class="input-group">
 												<span class="input-group-text"><ion-icon name="person"></ion-icon></span>
-												<p:inputText styleClass="form-control" id="username" value="${signUpController.newUser.username}" />
+												<p:inputText styleClass="form-control" id="username" value="${signUpController.newUser.username}">
+													<p:ajax event="keyup" listener="#{signUpController.verifyUsernameAvailable}" update="outputPanelUsername, isAvailable, isNotAvailable"/>
+													<p:ajax event="focus" listener="#{signUpController.showUsernameAvailableGrid}" update="outputPanelUsername"/>
+													<p:ajax event="blur" listener="#{signUpController.hideUsernameAvailableGrid}" update="outputPanelUsername"/>
+												</p:inputText>
 												<p:watermark for="username" value="Nome de usuário" />
 											</div>
 										</div>
@@ -66,6 +71,32 @@
 											</div>
 										</div>
 									</div>
+									<p:outputPanel id="outputPanelUsername" rendered="true">
+										<h:panelGroup layout="block" id="usernamePanelGroup" rendered="${signUpController.usernameAvailablePanelGroup}" >
+											<div class="row mt-4 mb-3">
+												<div class="col">
+													<h:panelGroup layout="block" id="isAvailable" rendered="${signUpController.usernameIsAvailable}" >
+														<div class="card text-white bg-success">
+														  <div class="card-body">
+														    <div class="d-flex align-items-center">
+														    	<ion-icon name="checkmark-outline" size="large"></ion-icon><span>O username <b>${signUpController.newUser.username}</b> está disponível!</span>
+													    	</div>
+														  </div>
+														</div>
+													</h:panelGroup>
+													<h:panelGroup layout="block" id="isNotAvailable" rendered="${signUpController.usernameIsNotAvailable}" >
+														<div class="card text-dark bg-warning">
+														  <div class="card-body">
+														    <div class="d-flex align-items-center">
+															    <ion-icon name="alert-outline" size="large"></ion-icon><span>Atenção! O username <b>${signUpController.newUser.username}</b> já existe.</span>
+														    </div>
+														  </div>
+														</div>
+													</h:panelGroup>
+												</div>
+											</div>
+										</h:panelGroup>
+									</p:outputPanel>
 									<div class="row mt-4 mb-3 hidden" id="hint">
 										<div class="col">
 											<div class="progress hidden" id="pass-strenght">
@@ -88,7 +119,7 @@
 										</div>
 									</div>
 									
-									<p:commandButton value="Cadastrar" styleClass="ui-button-raised ui-button-help w-100" actionListener="#{signUpController.cadastrar()}"  update="growl" />
+									<p:commandButton value="Cadastrar" styleClass="ui-button-raised ui-button-help w-100" icon="pi pi-user-plus" iconPos="right" actionListener="#{signUpController.cadastrar()}"  update="growl" />
 									<div class="col-md-12 text-center">
 										Já é um membro ? <p:commandLink actionListener="#{signUpController.login()}" value="realize seu login!" />
 									</div>

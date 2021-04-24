@@ -18,4 +18,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 		return usuarioDAO.salvarUsuario(saveUser);
 	}
 
+	@Override
+	public Boolean usernameExists(String username) throws Exception {
+		return usuarioDAO.usernameExists(username);
+	}
+
 }
