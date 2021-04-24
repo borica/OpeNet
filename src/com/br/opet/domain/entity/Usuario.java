@@ -5,7 +5,7 @@ import java.util.Date;
 import com.br.opet.domain.dto.GoogleTokenDTO;
 import com.br.opet.domain.dto.GoogleUserInfoDTO;
 
-public class User {
+public class Usuario {
 	
 	private String username;
 	private String password;
@@ -16,9 +16,11 @@ public class User {
 	private GoogleUserInfoDTO googleUserInfoDTO;
 	private boolean isGoogleUser;
 	
-	public User(){}
+	public Usuario(){
+		this.curso = new Curso();
+	}
 	
-	public User(String username, String password, Date lastLogin) {
+	public Usuario(String username, String password, Date lastLogin) {
 		this.username = username;
 		this.password = password;
 		this.lastLogin = lastLogin;
@@ -87,5 +89,13 @@ public class User {
 	public void setCurso(Curso curso) {
 		this.curso = curso;
 	}
+	
+	@Override
+	public String toString() {
+		return "User [username=" + username + ", password=" + password + ", fullName=" + fullName + ", lastLogin="
+				+ lastLogin + ", curso=" + curso + ", googleTokenDTO=" + googleTokenDTO + ", googleUserInfoDTO="
+				+ googleUserInfoDTO + ", isGoogleUser=" + isGoogleUser + "]";
+	}
+
 
 }

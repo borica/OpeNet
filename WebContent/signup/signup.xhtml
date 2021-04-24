@@ -4,7 +4,8 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:jsf="http://xmlns.jcp.org/jsf"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <f:view contentType="text/html;charset=UTF-8" encoding="UTF-8">
 	<h:head>
@@ -44,7 +45,7 @@
 										<div class="col">
 											<div class="input-group">
 												<span class="input-group-text"><ion-icon name="person-add"></ion-icon></span>
-												<p:inputText styleClass="form-control" id="fullname" type="text" value="#{signUpController.signUpUser.fullName}" />
+												<p:inputText styleClass="form-control" id="fullname" type="text" value="${signUpController.newUser.fullName}" />
 												<p:watermark for="fullname" value="Insira seu nome e sobrenome" />
 											</div>
 										</div>
@@ -53,14 +54,14 @@
 										<div class="col">
 											<div class="input-group">
 												<span class="input-group-text"><ion-icon name="person"></ion-icon></span>
-												<p:inputText styleClass="form-control" id="username" value="#{signUpController.signUpUser.username}" />
+												<p:inputText styleClass="form-control" id="username" value="${signUpController.newUser.username}" />
 												<p:watermark for="username" value="Nome de usuário" />
 											</div>
 										</div>
 										<div class="col">
 											<div class="input-group">
 												<span class="input-group-text"><ion-icon name="lock-closed"></ion-icon></span>
-												<p:inputText styleClass="form-control password-field" id="password" type="password" value="#{signUpController.signUpUser.password}" />
+												<p:inputText styleClass="form-control password-field" id="password" type="password" value="${signUpController.newUser.password}" />
 												<p:watermark for="password" value="Escolha sua senha" />
 											</div>
 										</div>
@@ -74,20 +75,20 @@
 									</div>
 									<div class="row mt-4 mb-3">
 										<div class="col">
-											<p:selectOneMenu id="option" styleClass="w-100" value="#{signUpController.signUpUser.curso.id}">
-							                    <f:selectItem itemLabel="Selecione o seu curso" itemValue=""/>
-							                    <f:selectItem itemLabel="TADS" itemValue="1"/>
-							                    <f:selectItem itemLabel="CDC" itemValue="2"/>
-							                    <f:selectItem itemLabel="BSI" itemValue="3"/>
+											<p:selectOneMenu id="option" styleClass="w-100" value="${signUpController.newUser.curso.id}">
+						                    	<f:selectItem itemLabel="Selecione o seu curso" itemValue="0"/>
+						                    	<c:forEach items="#{signUpController.listCurso}" var="curso">
+						                    		<f:selectItem itemLabel="#{curso.descricao}" itemValue="#{curso.id}"/>
+						                    	</c:forEach>
 							                    <f:facet name="footer">
 							                        <p:divider styleClass="p-mt-0" />
-							                        <h:outputText value="3 options" style="font-weight:bold;"/>
+							                        <h:outputText value="${signUpController.listCurso.size()} cursos" style="font-weight:bold;"/>
 							                    </f:facet>
 							                </p:selectOneMenu>
 										</div>
 									</div>
 									
-									<p:commandButton value="Cadastrar" styleClass="ui-button-raised ui-button-help w-100" update="growl" />
+									<p:commandButton value="Cadastrar" styleClass="ui-button-raised ui-button-help w-100" actionListener="#{signUpController.cadastrar()}"  update="growl" />
 									<div class="col-md-12 text-center">
 										Já é um membro ? <p:commandLink actionListener="#{signUpController.login()}" value="realize seu login!" />
 									</div>

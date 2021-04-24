@@ -5,8 +5,8 @@ import javax.ejb.Local;
 import com.br.opet.domain.entity.Usuario;
 
 @Local
-public interface LoginDAO {
-	
-	Boolean validCredentials(Usuario subjectUser) throws Exception; 
+public interface UsuarioDAO {
+
+	Boolean salvarUsuario(Usuario saveUser) throws Exception; 
 	
 }
