@@ -6,11 +6,12 @@ import com.br.opet.domain.dto.GoogleTokenDTO;
 import com.br.opet.domain.dto.GoogleUserInfoDTO;
 
 public class Usuario {
-	
+
 	private String username;
 	private String password;
 	private String fullName;
 	private Date lastLogin;
+	private Integer anoInicio; 
 	private Curso curso;
 	private GoogleTokenDTO googleTokenDTO;
 	private GoogleUserInfoDTO googleUserInfoDTO;
@@ -89,13 +90,20 @@ public class Usuario {
 	public void setCurso(Curso curso) {
 		this.curso = curso;
 	}
+
+	public Integer getAnoInicio() {
+		return anoInicio;
+	}
+
+	public void setAnoInicio(Integer anoInicio) {
+		this.anoInicio = anoInicio;
+	}
 	
 	@Override
 	public String toString() {
-		return "User [username=" + username + ", password=" + password + ", fullName=" + fullName + ", lastLogin="
-				+ lastLogin + ", curso=" + curso + ", googleTokenDTO=" + googleTokenDTO + ", googleUserInfoDTO="
-				+ googleUserInfoDTO + ", isGoogleUser=" + isGoogleUser + "]";
+		return "Usuario [username=" + username + ", password=" + password + ", fullName=" + fullName + ", lastLogin="
+				+ lastLogin + ", anoInicio=" + anoInicio + ", curso=" + curso + ", googleTokenDTO=" + googleTokenDTO
+				+ ", googleUserInfoDTO=" + googleUserInfoDTO + ", isGoogleUser=" + isGoogleUser + "]";
 	}
-
 
 }

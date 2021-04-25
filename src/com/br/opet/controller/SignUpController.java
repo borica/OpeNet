@@ -14,31 +14,32 @@ import javax.faces.bean.SessionScoped;
 import com.br.opet.controller.base.BaseController;
 import com.br.opet.domain.entity.Curso;
 import com.br.opet.domain.entity.Usuario;
-import com.br.opet.domain.enumerator.LoginMessages;
 import com.br.opet.service.CursoService;
 import com.br.opet.service.UsuarioService;
+import com.br.opet.util.DateUtils;
 import com.google.common.base.Strings;
-
-import sun.text.normalizer.UBiDiProps;
 
 @SessionScoped
 @ManagedBean
 public class SignUpController extends BaseController implements Serializable {
 	
+	//Class Constants
 	private static final long serialVersionUID = 1L;
 	private static final String TAG = SignUpController.class.getName() + ": ";
 	
+	//Dependency Injection Variables
 	@EJB
 	private CursoService cursoService;
 	
 	@EJB
 	private UsuarioService usuarioService;
 	
-	private List<Curso> listCurso;
-	
+	//Sign up form Variables
 	private Usuario newUser;
 	
 	//UI Control Variables
+	private List<Curso> listCurso;
+	private List<Integer> listaAno;
 	private boolean usernameAvailablePanelGroup = false;
 	private boolean usernameIsAvailable = false;
 	private boolean usernameIsNotAvailable = false;
@@ -46,7 +47,7 @@ public class SignUpController extends BaseController implements Serializable {
 	@PostConstruct
 	public void init() {
 		this.newUser = new Usuario();
-		
+		this.setListaAno(DateUtils.getListAnos());
 		try {
 			this.setListCurso(cursoService.listarCursos());
 		} catch (SQLException e) {
@@ -174,6 +175,15 @@ public class SignUpController extends BaseController implements Serializable {
 
 	public void setUsernameIsNotAvailable(boolean usernameIsNotAvailable) {
 		this.usernameIsNotAvailable = usernameIsNotAvailable;
+	}
+
+	public List<Integer> getListaAno() {
+		return listaAno;
+	}
+
+
+	public void setListaAno(List<Integer> listaAno) {
+		this.listaAno = listaAno;
 	}
 	
 }

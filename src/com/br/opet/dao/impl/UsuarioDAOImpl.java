@@ -31,15 +31,17 @@ public class UsuarioDAOImpl extends AbstractDAO implements UsuarioDAO {
 				
 				StringBuilder queryStb = new StringBuilder();
 				
-				queryStb.append("INSERT INTO LOGIN_USER (ID, USERNAME, FULL_NAME, PASSWORD, ACTIVE) ");
-				queryStb.append("VALUES (LOGIN_USER_SEQ.nextval, ?, ?, ?, ?) ");
+				queryStb.append("INSERT INTO LOGIN_USER (ID, USERNAME, FULL_NAME, PASSWORD, CURSO_ID, ANO_INICIO, ACTIVE) ");
+				queryStb.append("VALUES (LOGIN_USER_SEQ.nextval, ?, ?, ?, ?, ?, ?) ");
 				
 				ps = conn.prepareStatement(queryStb.toString());
 				
 				ps.setString(1, saveUser.getUsername());
 				ps.setString(2, saveUser.getFullName());
 				ps.setString(3, Crypt.crypt(saveUser.getPassword(), salt));
-				ps.setString(4, "Y");
+				ps.setInt(4, saveUser.getCurso().getId());
+				ps.setInt(5, saveUser.getAnoInicio());
+				ps.setString(6, "Y");
 				
 				logInsert(TAG, queryStb.toString());
 				if (ps.executeUpdate() == 1) {

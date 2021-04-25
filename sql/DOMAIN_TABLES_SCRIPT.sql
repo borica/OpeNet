@@ -5,6 +5,7 @@ CREATE TABLE LOGIN_USER (
     FULL_NAME VARCHAR2(200) NOT NULL,
     active varchar2(1) not null,
     CURSO_ID NUMBER NOT NULL,
+    ano_inicio NUMBER(4) NOT NULL,
     primary key(id),
     FOREIGN KEY (CURSO_ID) REFERENCES CURSO(ID);
 );
