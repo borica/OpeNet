@@ -46,7 +46,7 @@
 										<div class="col">
 											<div class="input-group">
 												<span class="input-group-text"><ion-icon name="person-add"></ion-icon></span>
-												<p:inputText styleClass="form-control" id="fullname" type="text" value="${signUpController.newUser.fullName}"/>
+												<p:inputText styleClass="form-control" id="fullname" type="text" value="${signUpController.newUser.fullName}" required="#{empty param['skipvalidation']}"/>
 												<p:watermark for="fullname" value="Insira seu nome e sobrenome" />
 											</div>
 										</div>
@@ -55,7 +55,7 @@
 										<div class="col">
 											<div class="input-group">
 												<span class="input-group-text"><ion-icon name="person"></ion-icon></span>
-												<p:inputText styleClass="form-control" id="username" value="${signUpController.newUser.username}">
+												<p:inputText styleClass="form-control" id="username" value="${signUpController.newUser.username}" required="#{empty param['skipvalidation']}">
 													<p:ajax event="keyup" listener="#{signUpController.verifyUsernameAvailable}" update="outputPanelUsername, isAvailable, isNotAvailable"/>
 													<p:ajax event="focus" listener="#{signUpController.showUsernameAvailableGrid}" update="outputPanelUsername"/>
 													<p:ajax event="blur" listener="#{signUpController.hideUsernameAvailableGrid}" update="outputPanelUsername"/>
@@ -66,7 +66,7 @@
 										<div class="col">
 											<div class="input-group">
 												<span class="input-group-text"><ion-icon name="lock-closed"></ion-icon></span>
-												<p:inputText styleClass="form-control password-field" id="password" type="password" value="${signUpController.newUser.password}"/>
+												<p:inputText styleClass="form-control password-field" id="password" type="password" value="${signUpController.newUser.password}" required="#{empty param['skipvalidation']}"/>
 												<p:watermark for="password" value="Escolha sua senha" />
 											</div>
 										</div>
@@ -106,8 +106,8 @@
 									</div>
 									<div class="row mt-4 mb-3">
 										<div class="col-md-7">
-											<p:selectOneMenu id="optionCurso" autoWidth="false" styleClass="form-control" value="${signUpController.newUser.curso.id}">
-						                    	<f:selectItem itemLabel="Selecione o seu curso" itemValue="0"/>
+											<p:selectOneMenu id="optionCurso" autoWidth="false" styleClass="form-control" value="${signUpController.newUser.curso.id}" required="#{empty param['skipvalidation']}">
+						                    	<f:selectItem itemLabel="Selecione o seu curso" itemValue="#{null}"/>
 						                    	<c:forEach items="#{signUpController.listCurso}" var="curso">
 						                    		<f:selectItem itemLabel="#{curso.descricao}" itemValue="#{curso.id}"/>
 						                    	</c:forEach>
@@ -118,8 +118,8 @@
 							                </p:selectOneMenu>
 										</div>
 										<div class="col-md-5">
-											<p:selectOneMenu id="optionDataInicio" styleClass="form-control" value="${signUpController.newUser.anoInicio}">
-						                    	<f:selectItem itemLabel="Desde qual ano ?" itemValue="0"/>
+											<p:selectOneMenu id="optionDataInicio" styleClass="form-control" value="${signUpController.newUser.anoInicio}" required="#{empty param['skipvalidation']}">
+						                    	<f:selectItem itemLabel="Desde qual ano ?" itemValue="#{null}"/>
 						                    	<c:forEach items="#{signUpController.listaAno}" var="ano">
 						                    		<f:selectItem itemLabel="#{ano}" itemValue="#{ano}"/>
 						                    	</c:forEach>
@@ -127,7 +127,7 @@
 										</div>
 									</div>
 									
-									<p:commandButton value="Cadastrar" styleClass="ui-button-raised ui-button-help w-100" icon="pi pi-user-plus" iconPos="right" actionListener="#{signUpController.cadastrar()}"  update="growl" />
+									<p:commandButton value="Cadastrar" styleClass="ui-button-raised ui-button-help w-100" icon="pi pi-user-plus" iconPos="right" actionListener="#{signUpController.cadastrar()}"  update="@(form), growl" />
 									<div class="col-md-12 text-center">
 										Já é um membro ? <p:commandLink actionListener="#{signUpController.login()}" value="realize seu login!" />
 									</div>
