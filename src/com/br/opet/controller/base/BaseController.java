@@ -6,10 +6,17 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
+
+import com.br.opet.controller.SignUpController;
+
 public abstract class BaseController {
 	
 	protected final String PAGE_LOGIN = "/login.xhtml";
 	protected final String PAGE_DASHBOARD = "/dashboard/dashboard.xhtml";
+	protected final String PAGE_SIGNUP = "/signup/signup.xhtml";
+	
+	protected static Logger logger = Logger.getLogger(BaseController.class);
 	
 	protected void externalRedirect(String route) throws IOException {
 		FacesContext context = FacesContext.getCurrentInstance();

@@ -1,17 +1,17 @@
-package com.br.opet.business;
+package com.br.opet.service;
 
 import javax.ejb.Local;
 
 import com.br.opet.domain.dto.GoogleTokenDTO;
-import com.br.opet.domain.entity.User;
+import com.br.opet.domain.entity.Usuario;
 
 @Local
-public interface GoogleOauthBusiness {
+public interface GoogleOauthService {
 	
 	String getGoogleOauthLink() throws Exception;
 	
 	GoogleTokenDTO getGoogleTokenByAuthCode(String code) throws Exception;
 
-	User getGoogleUserAsUser(GoogleTokenDTO googleTokenDTO) throws Exception;
+	Usuario getGoogleUserAsUser(GoogleTokenDTO googleTokenDTO) throws Exception;
 	
 }

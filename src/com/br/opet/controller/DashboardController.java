@@ -7,24 +7,24 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
-import com.br.opet.business.GoogleOauthBusiness;
 import com.br.opet.controller.base.BaseController;
 import com.br.opet.domain.dto.GoogleTokenDTO;
-import com.br.opet.domain.entity.User;
+import com.br.opet.domain.entity.Usuario;
+import com.br.opet.service.GoogleOauthService;
 
 @SessionScoped
 @ManagedBean
 public class DashboardController extends BaseController {
 	
 	@EJB
-	private GoogleOauthBusiness googleOauthBusiness;
+	private GoogleOauthService googleOauthBusiness;
 	
-	private User loggedUser;
+	private Usuario loggedUser;
 	
 	@PostConstruct
 	public void init() {
 		try {
-			loggedUser = (User) getSessionAttribute("loggedUser");
+			loggedUser = (Usuario) getSessionAttribute("loggedUser");
 			 
 			if(getLoggedUser() == null){
 				contextRedirect(PAGE_LOGIN);
@@ -44,11 +44,11 @@ public class DashboardController extends BaseController {
 		}
 	}
 
-	public User getLoggedUser() {
+	public Usuario getLoggedUser() {
 		return loggedUser;
 	}
 
-	public void setLoggedUser(User loggedUser) {
+	public void setLoggedUser(Usuario loggedUser) {
 		this.loggedUser = loggedUser;
 	}
 	

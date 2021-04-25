@@ -1,17 +1,17 @@
-package com.br.opet.business.impl;
+package com.br.opet.service.impl;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-import com.br.opet.business.GoogleOauthBusiness;
 import com.br.opet.domain.dto.GoogleTokenDTO;
 import com.br.opet.domain.dto.GoogleUserInfoDTO;
-import com.br.opet.domain.entity.User;
+import com.br.opet.domain.entity.Usuario;
 import com.br.opet.rest.GoogleOauthRest;
+import com.br.opet.service.GoogleOauthService;
 import com.br.opet.util.RestUtil;
 
 @Stateless
-public class GoogleOauthBusinessImpl implements GoogleOauthBusiness {
+public class GoogleOauthServiceImpl implements GoogleOauthService {
 	
 	private static final String G_API_CLIENT_ID = "863559431244-idkms7ag5ulrrsdp536c6tdh1e5apvql.apps.googleusercontent.com";
 	
@@ -65,8 +65,8 @@ public class GoogleOauthBusinessImpl implements GoogleOauthBusiness {
 	}
 
 	@Override
-	public User getGoogleUserAsUser(GoogleTokenDTO googleTokenDTO) throws Exception {
-		User userWithGoogleInfo = new User();
+	public Usuario getGoogleUserAsUser(GoogleTokenDTO googleTokenDTO) throws Exception {
+		Usuario userWithGoogleInfo = new Usuario();
 		
 		GoogleUserInfoDTO googleUserInfoDTO = this.googleOauthRest.getGoogleUserInfo(googleTokenDTO);
 		

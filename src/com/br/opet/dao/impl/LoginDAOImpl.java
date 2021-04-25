@@ -3,7 +3,7 @@ package com.br.opet.dao.impl;
 import javax.ejb.Stateless;
 
 import com.br.opet.dao.LoginDAO;
-import com.br.opet.domain.entity.User;
+import com.br.opet.domain.entity.Usuario;
 
 @Stateless
 public class LoginDAOImpl implements LoginDAO {
@@ -12,7 +12,7 @@ public class LoginDAOImpl implements LoginDAO {
 	String validPassword = "123";
 	
 	@Override
-	public Boolean validCredentials(User subjectUser) throws Exception {
+	public Boolean validCredentials(Usuario subjectUser) throws Exception {
 		
 		if(subjectUser.getUsername().equals(this.validUsername) && subjectUser.getPassword().equals(validPassword))
 			return Boolean.TRUE;
