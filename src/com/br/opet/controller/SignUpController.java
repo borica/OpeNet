@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.PriorityQueue;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -38,15 +39,17 @@ public class SignUpController extends BaseController implements Serializable {
 	private Usuario newUser;
 	
 	//UI Control Variables
-	private List<Curso> listCurso;
+	private List<Curso> listCurso; 
 	private List<Integer> listaAno;
 	private boolean usernameAvailablePanelGroup = false;
 	private boolean usernameIsAvailable = false;
 	private boolean usernameIsNotAvailable = false;
+	private PriorityQueue<Integer> usersToApproveQueue;
 	
 	@PostConstruct
 	public void init() {
 		this.newUser = new Usuario();
+		this.usersToApproveQueue = getUsersToApproveQueue();
 		this.setListaAno(DateUtils.getListAnos());
 		try {
 			this.setListCurso(cursoService.listarCursos());
@@ -61,7 +64,9 @@ public class SignUpController extends BaseController implements Serializable {
 			try {
 				usuarioService.salvarUsuario(newUser);
 				this.newUser = new Usuario();
+				usersToApproveQueue.add(newUser.getId());
 				addMessage(FacesMessage.SEVERITY_INFO, "Cadastro", "Cadastro realizado com sucesso!");
+				addMessage(FacesMessage.SEVERITY_INFO, "Cadastro", "Aguardando aprovação do administrador.");
 			} catch (Exception e) {
 				logger.error(TAG + e.getMessage());
 			}

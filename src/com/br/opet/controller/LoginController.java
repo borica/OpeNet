@@ -30,7 +30,7 @@ public class LoginController extends BaseController implements Serializable {
 	private static final String TAG = LoginController.class.getName() + ": ";
 	
 	@EJB
-	private LoginService loginBusiness;
+	private LoginService loginService;
 	
 	@EJB
 	private GoogleOauthService googleOauthBusiness;
@@ -121,6 +121,19 @@ public class LoginController extends BaseController implements Serializable {
 		}
 	}
 
+	public void generateSalt() {
+		try {
+			logger.info(TAG + "Gerando nova SALT.");
+			if(loginService.generateDomainSalt()) {
+				logger.info(TAG + "SALT gerada com sucesso.");
+			} else {
+				logger.info(TAG + "Erro ao gerar SALT");
+			}
+		} catch (Exception e) {
+			logger.info(TAG + "Erro ao gerar SALT: " + e.getMessage());
+		}
+	}
+	
 	private boolean validateLogin() throws Exception {
 		boolean isValid = true;
 		
@@ -128,13 +141,13 @@ public class LoginController extends BaseController implements Serializable {
 			isValid = false;
 		}
 		
-		if (!loginBusiness.verifyUserCredentials(new Usuario(username, password, null))) {
+		if (!loginService.verifyUserCredentials(new Usuario(username, password, null))) {
 			isValid = false;
 		}
 
 		return isValid;
 	}
-
+	
 	private void cleanFields() {
 		this.username = "";
 		this.password = "";

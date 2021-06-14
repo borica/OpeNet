@@ -8,5 +8,5 @@ import com.br.opet.domain.entity.Usuario;
 public interface LoginService {
 	
 	Boolean verifyUserCredentials(Usuario subjectUser) throws Exception;
-	
+	Boolean generateDomainSalt() throws Exception;
 }

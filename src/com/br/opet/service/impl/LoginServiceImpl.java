@@ -22,4 +22,9 @@ public class LoginServiceImpl implements LoginService {
 		return this.usuarioDAO.verifyUserCredentials(subjectUser);
 	}
 
+	@Override
+	public Boolean generateDomainSalt() throws Exception {
+		return this.usuarioDAO.generateDomainSalt();
+	}
+
 }
