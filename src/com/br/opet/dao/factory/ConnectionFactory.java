@@ -6,8 +6,8 @@ import java.sql.SQLException;
 
 public class ConnectionFactory {
 	private static final String URL = "jdbc:oracle:thin:@localhost:1521:XE";
-    private static final String USER = "OPENET";
-    private static final String PASSWORD = "opet123";
+    private static final String USER = "openet";
+    private static final String PASSWORD = "openet123";
 	
     public static Connection getConn() {
     	

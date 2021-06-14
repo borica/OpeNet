@@ -1,6 +1,7 @@
 package com.br.opet.controller.base;
 
 import java.io.IOException;
+import java.util.PriorityQueue;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 
 import com.br.opet.controller.SignUpController;
+import com.br.opet.domain.entity.Usuario;
 
 public abstract class BaseController {
 	
@@ -38,6 +40,15 @@ public abstract class BaseController {
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletRequest req = (HttpServletRequest)context.getExternalContext().getRequest();
 		return req.getSession().getAttribute(atributo);
+	}
+	
+	protected PriorityQueue<Integer> getUsersToApproveQueue() {
+		PriorityQueue<Integer> sessionQueue = (PriorityQueue<Integer>) getSessionAttribute("usersToApproveQueue");
+		if(sessionQueue == null) {
+			sessionQueue = new PriorityQueue<Integer>();
+			setSessionAttribute("usersToApproveQueue", sessionQueue);
+		}
+		return sessionQueue;
 	}
 	
 	protected void invalidateSession() {
